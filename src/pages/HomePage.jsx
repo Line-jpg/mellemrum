@@ -87,7 +87,7 @@ export default function HomePage() {
 
         <section className="event-grid">
           {filteredEvents.map((event) => (
-            <article className="event-card" key={event.id}>
+            <Link className="event-card" key={event.id} to={`/events/${event.id}`}>
               <img src={event.image} alt="" />
               <div className="event-card-content">
                 <p className="event-category">{event.category}</p>
@@ -97,11 +97,9 @@ export default function HomePage() {
                   <span>{formatEventDate(event.date)}</span>
                   <span>{event.venueName}</span>
                 </div>
-                <Link className="card-link" to={`/events/${event.id}`}>
-                  Læs mere
-                </Link>
+                <span className="card-link">Læs mere</span>
               </div>
-            </article>
+            </Link>
           ))}
         </section>
       </main>
