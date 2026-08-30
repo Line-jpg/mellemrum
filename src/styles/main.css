@@ -362,6 +362,68 @@ select:focus {
   width: 100%;
 }
 
+.skeleton-card-eyebrow {
+  width: 35%;
+}
+
+.skeleton-card-title {
+  height: 1.6rem;
+  width: 80%;
+}
+
+.skeleton-card-text {
+  width: 95%;
+}
+
+.skeleton-card-text-short {
+  width: 60%;
+}
+
+.skeleton-detail-eyebrow {
+  width: 25%;
+}
+
+.skeleton-detail-title {
+  height: 3rem;
+  width: 70%;
+}
+
+.skeleton-detail-subtitle {
+  width: 90%;
+}
+
+.skeleton-detail-paragraph {
+  height: 4.5rem;
+  width: 100%;
+}
+
+.skeleton-detail-paragraph-long {
+  height: 6rem;
+  width: 100%;
+}
+
+.skeleton-row-title {
+  width: 70%;
+}
+
+.skeleton-row-subtitle {
+  height: 0.7rem;
+  margin-top: 0.3rem;
+  width: 50%;
+}
+
+.skeleton-row-cell-1 {
+  width: 60%;
+}
+
+.skeleton-row-cell-2 {
+  width: 50%;
+}
+
+.skeleton-row-cell-3 {
+  width: 40%;
+}
+
 .event-grid .message {
   grid-column: 1 / -1;
 }
