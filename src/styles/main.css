@@ -246,6 +246,7 @@ select:focus {
   flex-direction: column;
   min-height: 100%;
   overflow: hidden;
+  text-decoration: none;
   transition:
     box-shadow 180ms ease,
     transform 180ms ease;
