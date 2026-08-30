@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { SkeletonRegistrationRow } from "../components/Skeleton";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -10,13 +11,25 @@ const headers = {
 export default function RegistrationsPage() {
   const [registrations, setRegistrations] = useState([]);
   const [registrationCount, setRegistrationCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getRegistrations() {
-      const response = await fetch(`${SUPABASE_URL}/registrations?order=createdAt.desc`, { headers });
-      const data = await response.json();
-      setRegistrations(data);
-      setRegistrationCount(data.length);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`${SUPABASE_URL}/registrations?order=createdAt.desc`, { headers });
+        if (!response.ok) throw new Error("Kunne ikke hente tilmeldinger.");
+        const data = await response.json();
+        setRegistrations(data);
+        setRegistrationCount(data.length);
+      } catch (err) {
+        console.error(err);
+        setError("Der opstod en fejl. Prøv at genindlæse siden.");
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     getRegistrations();
@@ -27,17 +40,29 @@ export default function RegistrationsPage() {
       <header className="admin-header">
         <p className="eyebrow">Internt overblik</p>
         <h1>Tilmeldinger</h1>
-        <p>{registrationCount} tilmeldinger i alt</p>
+        <p>{isLoading ? "Indlæser…" : `${registrationCount} tilmeldinger i alt`}</p>
       </header>
       <main>
-        <div className="registration-list">
+        <div className="registration-list" aria-busy={isLoading}>
           <div className="registration-row registration-labels">
             <span>Navn</span>
             <span>Event</span>
             <span>Dato</span>
             <span>Status</span>
           </div>
-          {registrations.map((registration) => (
+          {isLoading && (
+            <>
+              <p role="status" className="sr-only">Indlæser tilmeldinger…</p>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <SkeletonRegistrationRow key={index} />
+              ))}
+            </>
+          )}
+          {!isLoading && error && <p className="message" role="alert">{error}</p>}
+          {!isLoading && !error && registrations.length === 0 && (
+            <p className="message">Ingen tilmeldinger endnu.</p>
+          )}
+          {!isLoading && !error && registrations.map((registration) => (
             <div className="registration-row" key={registration.id}>
               <div>
                 <strong>{registration.name}</strong>

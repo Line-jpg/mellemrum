@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import EventCard from "../components/EventCard";
+import { SkeletonEventCard } from "../components/Skeleton";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -12,12 +13,24 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Alle");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getEvents() {
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, { headers });
-      const data = await response.json();
-      setEvents(data);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, { headers });
+        if (!response.ok) throw new Error("Kunne ikke hente events.");
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        console.error(err);
+        setError("Der opstod en fejl. Prøv at genindlæse siden.");
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     getEvents();
@@ -75,8 +88,20 @@ export default function HomePage() {
           </label>
         </section>
 
-        <section className="event-grid">
-          {filteredEvents.map((event) => (
+        <section className="event-grid" aria-busy={isLoading}>
+          {isLoading && (
+            <>
+              <p role="status" className="sr-only">Indlæser events…</p>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <SkeletonEventCard key={index} />
+              ))}
+            </>
+          )}
+          {!isLoading && error && <p className="message" role="alert">{error}</p>}
+          {!isLoading && !error && filteredEvents.length === 0 && (
+            <p className="message">Ingen events matcher din søgning.</p>
+          )}
+          {!isLoading && !error && filteredEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </section>
