@@ -14,7 +14,7 @@ function formatEventDate(eventDate) {
 export default function EventCard({ event }) {
   return (
     <Link className="event-card" to={`/events/${event.id}`}>
-      <img src={event.image} alt="" />
+      <img src={event.image} alt="" loading="lazy" />
       <div className="event-card-content">
         <p className="event-category">{event.category}</p>
         <h3>{event.title}</h3>

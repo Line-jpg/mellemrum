@@ -326,6 +326,126 @@ select:focus {
   padding: 1rem;
 }
 
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-block {
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--cream) 25%,
+    rgba(245, 242, 234, 0.6) 50%,
+    var(--cream) 75%
+  );
+  background-size: 300% 100%;
+  border-radius: 6px;
+}
+
+.skeleton-line {
+  height: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.skeleton-line:last-child {
+  margin-bottom: 0;
+}
+
+.skeleton-image {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  width: 100%;
+}
+
+.skeleton-card-eyebrow {
+  width: 35%;
+}
+
+.skeleton-card-title {
+  height: 1.6rem;
+  width: 80%;
+}
+
+.skeleton-card-text {
+  width: 95%;
+}
+
+.skeleton-card-text-short {
+  width: 60%;
+}
+
+.skeleton-detail-eyebrow {
+  width: 25%;
+}
+
+.skeleton-detail-title {
+  height: 3rem;
+  width: 70%;
+}
+
+.skeleton-detail-subtitle {
+  width: 90%;
+}
+
+.skeleton-detail-paragraph {
+  height: 4.5rem;
+  width: 100%;
+}
+
+.skeleton-detail-paragraph-long {
+  height: 6rem;
+  width: 100%;
+}
+
+.skeleton-row-title {
+  width: 70%;
+}
+
+.skeleton-row-subtitle {
+  height: 0.7rem;
+  margin-top: 0.3rem;
+  width: 50%;
+}
+
+.skeleton-row-cell-1 {
+  width: 60%;
+}
+
+.skeleton-row-cell-2 {
+  width: 50%;
+}
+
+.skeleton-row-cell-3 {
+  width: 40%;
+}
+
+.event-grid .message {
+  grid-column: 1 / -1;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation: none;
+  }
+}
+
 .page-header,
 .admin-header {
   background: var(--green);
@@ -605,7 +725,8 @@ select:focus {
   overflow: hidden;
 }
 
-.event-detail > img {
+.event-detail > img,
+.skeleton-detail > .skeleton-image {
   height: 100%;
   min-height: 600px;
   object-fit: cover;
@@ -842,7 +963,8 @@ select:focus {
     grid-template-columns: 1fr;
   }
 
-  .event-detail > img {
+  .event-detail > img,
+  .skeleton-detail > .skeleton-image {
     min-height: 380px;
   }
 

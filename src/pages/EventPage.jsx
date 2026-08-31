@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { createRegistration } from "../services/registrations";
+import { SkeletonEventDetail } from "../components/Skeleton";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -15,14 +16,26 @@ export default function EventPage() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getEvent() {
-      const response = await fetch(`${SUPABASE_URL}/events?id=eq.${eventId}`, {
-        headers,
-      });
-      const data = await response.json();
-      setEvent(data[0]);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`${SUPABASE_URL}/events?id=eq.${eventId}`, {
+          headers,
+        });
+        if (!response.ok) throw new Error("Kunne ikke hente eventet.");
+        const data = await response.json();
+        setEvent(data[0] ?? null);
+      } catch (err) {
+        console.error(err);
+        setError("Der opstod en fejl. Prøv at genindlæse siden.");
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     getEvent();
@@ -53,8 +66,38 @@ export default function EventPage() {
     }
   }
 
+  if (isLoading) {
+    return (
+      <main className="event-page" aria-busy="true">
+        <Link className="back-link" to="/">
+          ← Alle events
+        </Link>
+        <p role="status" className="sr-only">Indlæser event…</p>
+        <SkeletonEventDetail />
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="event-page">
+        <Link className="back-link" to="/">
+          ← Alle events
+        </Link>
+        <p className="message" role="alert">{error}</p>
+      </main>
+    );
+  }
+
   if (!event) {
-    return null;
+    return (
+      <main className="event-page">
+        <Link className="back-link" to="/">
+          ← Alle events
+        </Link>
+        <p className="message" role="status">Vi kunne ikke finde det event, du leder efter.</p>
+      </main>
+    );
   }
 
   const date = new Date(event.date);
@@ -67,7 +110,7 @@ export default function EventPage() {
         </Link>
 
         <section className="event-detail">
-          <img src={event.image} alt="" />
+          <img src={event.image} alt="" loading="eager" />
           <div className="event-detail-content">
             <p className="event-category">{event.category}</p>
             <h1>{event.title}</h1>
