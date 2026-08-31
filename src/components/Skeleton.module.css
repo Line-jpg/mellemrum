@@ -1,0 +1,116 @@
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonBlock {
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--cream) 25%,
+    rgba(245, 242, 234, 0.6) 50%,
+    var(--cream) 75%
+  );
+  background-size: 300% 100%;
+  border-radius: 6px;
+}
+
+.skeletonLine {
+  height: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.skeletonLine:last-child {
+  margin-bottom: 0;
+}
+
+.skeletonImage {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  width: 100%;
+}
+
+.skeletonCardEyebrow {
+  width: 35%;
+}
+
+.skeletonCardTitle {
+  height: 1.6rem;
+  width: 80%;
+}
+
+.skeletonCardText {
+  width: 95%;
+}
+
+.skeletonCardTextShort {
+  width: 60%;
+}
+
+.skeletonDetailEyebrow {
+  width: 25%;
+}
+
+.skeletonDetailTitle {
+  height: 3rem;
+  width: 70%;
+}
+
+.skeletonDetailSubtitle {
+  width: 90%;
+}
+
+.skeletonDetailParagraph {
+  height: 4.5rem;
+  width: 100%;
+}
+
+.skeletonDetailParagraphLong {
+  height: 6rem;
+  width: 100%;
+}
+
+.skeletonRowTitle {
+  width: 70%;
+}
+
+.skeletonRowSubtitle {
+  height: 0.7rem;
+  margin-top: 0.3rem;
+  width: 50%;
+}
+
+.skeletonRowCell1 {
+  width: 60%;
+}
+
+.skeletonRowCell2 {
+  width: 50%;
+}
+
+.skeletonRowCell3 {
+  width: 40%;
+}
+
+.skeletonDetail > .skeletonImage {
+  height: 100%;
+  min-height: 600px;
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .skeletonDetail > .skeletonImage {
+    min-height: 380px;
+  }
+}

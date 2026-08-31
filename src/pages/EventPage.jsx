@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { createRegistration } from "../services/registrations";
 import Footer from "../components/Footer";
 import { SkeletonEventDetail } from "../components/Skeleton";
+import styles from "./EventPage.module.css";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -69,8 +70,8 @@ export default function EventPage() {
 
   if (isLoading) {
     return (
-      <main className="event-page" aria-busy="true">
-        <Link className="back-link" to="/">
+      <main className={styles.eventPage} aria-busy="true">
+        <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
         <p role="status" className="sr-only">Indlæser event…</p>
@@ -81,22 +82,22 @@ export default function EventPage() {
 
   if (error) {
     return (
-      <main className="event-page">
-        <Link className="back-link" to="/">
+      <main className={styles.eventPage}>
+        <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
-        <p className="message" role="alert">{error}</p>
+        <p className={styles.message} role="alert">{error}</p>
       </main>
     );
   }
 
   if (!event) {
     return (
-      <main className="event-page">
-        <Link className="back-link" to="/">
+      <main className={styles.eventPage}>
+        <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
-        <p className="message" role="status">Vi kunne ikke finde det event, du leder efter.</p>
+        <p className={styles.message} role="status">Vi kunne ikke finde det event, du leder efter.</p>
       </main>
     );
   }
@@ -105,18 +106,18 @@ export default function EventPage() {
 
   return (
     <>
-      <main className="event-page">
-        <Link className="back-link" to="/">
+      <main className={styles.eventPage}>
+        <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
 
-        <section className="event-detail">
+        <section className={styles.eventDetail}>
           <img src={event.image} alt="" loading="eager" />
-          <div className="event-detail-content">
-            <p className="event-category">{event.category}</p>
+          <div className={styles.eventDetailContent}>
+            <p className={styles.eventCategory}>{event.category}</p>
             <h1>{event.title}</h1>
-            <p className="lead">{event.summary}</p>
-            <div className="detail-list">
+            <p className={styles.lead}>{event.summary}</p>
+            <div className={styles.detailList}>
               <p>
                 <strong>Dato</strong>
                 {date.toLocaleDateString("da-DK", {
@@ -154,9 +155,9 @@ export default function EventPage() {
           </div>
         </section>
 
-        <section className="signup-panel">
+        <section className={styles.signupPanel}>
           <div>
-            <p className="eyebrow dark">Tilmelding</p>
+            <p className={styles.eyebrowDark}>Tilmelding</p>
             <h2>Reserver din plads</h2>
             <p>
               Udfyld formularen, så sender vi din tilmelding til arrangøren.

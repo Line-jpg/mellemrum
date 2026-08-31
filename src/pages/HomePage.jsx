@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import Footer from "../components/Footer";
 import { SkeletonEventCard } from "../components/Skeleton";
+import styles from "./HomePage.module.css";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -48,27 +49,27 @@ export default function HomePage() {
 
   return (
     <>
-      <header className="hero">
-        <p className="eyebrow">Kultur i Aarhus</p>
+      <header className={styles.hero}>
+        <p className={styles.eyebrow}>Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
-        <p className="hero-copy">
+        <p className={styles.heroCopy}>
           Koncerter, talks og workshops samlet ét sted. Find dit næste event, og tilmeld dig på få minutter.
         </p>
-        <a className="hero-link" href="#events">
+        <a className={styles.heroLink} href="#events">
           Se kommende events ↓
         </a>
       </header>
 
       <main id="events">
-        <section className="section-heading">
+        <section className={styles.sectionHeading}>
           <div>
-            <p className="eyebrow dark">Det sker</p>
+            <p className={styles.eyebrowDark}>Det sker</p>
             <h2>Kommende events</h2>
           </div>
           <p>Kuraterede oplevelser i byen – fra små scener til store idéer.</p>
         </section>
 
-        <section className="filters">
+        <section className={styles.filters}>
           <label>
             Søg
             <input
@@ -88,7 +89,7 @@ export default function HomePage() {
           </label>
         </section>
 
-        <section className="event-grid" aria-busy={isLoading}>
+        <section className={styles.eventGrid} aria-busy={isLoading}>
           {isLoading && (
             <>
               <p role="status" className="sr-only">Indlæser events…</p>
@@ -97,9 +98,9 @@ export default function HomePage() {
               ))}
             </>
           )}
-          {!isLoading && error && <p className="message" role="alert">{error}</p>}
+          {!isLoading && error && <p className={styles.message} role="alert">{error}</p>}
           {!isLoading && !error && filteredEvents.length === 0 && (
-            <p className="message">Ingen events matcher din søgning.</p>
+            <p className={styles.message}>Ingen events matcher din søgning.</p>
           )}
           {!isLoading && !error && filteredEvents.map((event) => (
             <EventCard key={event.id} event={event} />
