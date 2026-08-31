@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -7,6 +8,12 @@ import RegistrationsPage from "./pages/RegistrationsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
       <Navbar />
