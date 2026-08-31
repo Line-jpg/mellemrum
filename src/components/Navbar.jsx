@@ -8,7 +8,7 @@ export default function Navbar() {
       </NavLink>
       <div className="nav-links">
         <NavLink to="/">Events</NavLink>
-        <NavLink to="/om">Om Mellemrums</NavLink>
+        <NavLink to="/om">Om Mellemrum</NavLink>
       </div>
     </nav>
   );
