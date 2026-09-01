@@ -26,9 +26,12 @@ export default function EventPage() {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${SUPABASE_URL}/events?id=eq.${eventId}`, {
-          headers,
-        });
+        const response = await fetch(
+          `${SUPABASE_URL}/events?id=eq.${eventId}`,
+          {
+            headers,
+          },
+        );
         if (!response.ok) throw new Error("Kunne ikke hente eventet.");
         const data = await response.json();
         setEvent(data[0] ?? null);
@@ -74,7 +77,9 @@ export default function EventPage() {
         <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
-        <p role="status" className="sr-only">Indlæser event…</p>
+        <p role="status" className="sr-only">
+          Indlæser event…
+        </p>
         <SkeletonEventDetail />
       </main>
     );
@@ -86,7 +91,9 @@ export default function EventPage() {
         <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
-        <p className={styles.message} role="alert">{error}</p>
+        <p className={styles.message} role="alert">
+          {error}
+        </p>
       </main>
     );
   }
@@ -97,7 +104,9 @@ export default function EventPage() {
         <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
-        <p className={styles.message} role="status">Vi kunne ikke finde det event, du leder efter.</p>
+        <p className={styles.message} role="status">
+          Vi kunne ikke finde det event, du leder efter.
+        </p>
       </main>
     );
   }
@@ -171,6 +180,7 @@ export default function EventPage() {
                 required
                 value={name}
                 onChange={(inputEvent) => setName(inputEvent.target.value)}
+                placeholder="Dit navn"
               />
             </label>
             <span>E-mail</span>
