@@ -6,7 +6,7 @@ function formatEventDate(eventDate) {
   const formattedDate = date.toLocaleDateString("da-DK", {
     weekday: "long",
     day: "numeric",
-    month: "long"
+    month: "long",
   });
 
   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
@@ -15,7 +15,7 @@ function formatEventDate(eventDate) {
 export default function EventCard({ event }) {
   return (
     <Link className={styles.eventCard} to={`/events/${event.id}`}>
-      <img src={event.image} alt="" loading="lazy" />
+      <img src={event.image} alt="" />
       <div className={styles.eventCardContent}>
         <p className={styles.eventCategory}>{event.category}</p>
         <h3>{event.title}</h3>
