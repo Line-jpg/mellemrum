@@ -22,7 +22,7 @@ export default function EventCard({ event }) {
         <p>{event.summary}</p>
         <div className={styles.eventMeta}>
           <span>{formatEventDate(event.date)}</span>
-          <span>{event.venueName}</span>
+          <span>{event.venue.name}</span>
         </div>
         <span className={styles.cardLink}>Læs mere</span>
       </div>
