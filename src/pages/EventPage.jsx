@@ -26,8 +26,9 @@ export default function EventPage() {
       setIsLoading(true);
       setError(null);
       try {
+        const query = "select=*,venue:venues(*)";
         const response = await fetch(
-          `${SUPABASE_URL}/events?id=eq.${eventId}`,
+          `${SUPABASE_URL}/events?id=eq.${eventId}&${query}`,
           {
             headers,
           },
@@ -57,7 +58,7 @@ export default function EventPage() {
         email: email.trim(),
         eventTitle: event.title,
         eventDate: event.date,
-        eventLocation: event.venueName,
+        eventLocation: event.venue.name,
       });
 
       setName("");
@@ -143,14 +144,14 @@ export default function EventPage() {
               <p>
                 <strong>Sted</strong>
                 <span>
-                  {event.venueName}
+                  {event.venue.name}
                   <br />
-                  {event.venueAddress}, {event.venuePostalCode}{" "}
-                  {event.venueCity}
-                  {event.venueWebsite && (
+                  {event.venue.address}, {event.venue.postalCode}{" "}
+                  {event.venue.city}
+                  {event.venue.website && (
                     <>
                       <br />
-                      <a href={event.venueWebsite}>Besøg venue</a>
+                      <a href={event.venue.website}>Besøg venue</a>
                     </>
                   )}
                 </span>
@@ -180,7 +181,7 @@ export default function EventPage() {
                 required
                 value={name}
                 onChange={(inputEvent) => setName(inputEvent.target.value)}
-                placeholder="Dit navn"
+                placeholder="Dit fulde navn"
               />
             </label>
             <span>E-mail</span>

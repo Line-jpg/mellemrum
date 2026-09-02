@@ -7,7 +7,7 @@ import styles from "./HomePage.module.css";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
   apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json"
+  "Content-Type": "application/json",
 };
 
 export default function HomePage() {
@@ -22,7 +22,11 @@ export default function HomePage() {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, { headers });
+        const query = "select=*,venue:venues(*)";
+        const response = await fetch(
+          `${SUPABASE_URL}/events?order=date.asc&${query}`,
+          { headers },
+        );
         if (!response.ok) throw new Error("Kunne ikke hente events.");
         const data = await response.json();
         setEvents(data);
@@ -37,10 +41,14 @@ export default function HomePage() {
     getEvents();
   }, []);
 
-  const categories = ["Alle", ...new Set(events.map((event) => event.category))];
+  const categories = [
+    "Alle",
+    ...new Set(events.map((event) => event.category)),
+  ];
 
   const filteredEvents = events.filter((event) => {
-    const searchText = `${event.title} ${event.summary} ${event.venueName}`.toLowerCase();
+    const searchText =
+      `${event.title} ${event.summary} ${event.venue.name}`.toLowerCase();
     const matchesSearch = searchText.includes(search.toLowerCase());
     const matchesCategory = category === "Alle" || event.category === category;
 
@@ -53,7 +61,8 @@ export default function HomePage() {
         <p className={styles.eyebrow}>Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
         <p className={styles.heroCopy}>
-          Koncerter, talks og workshops samlet ét sted. Find dit næste event, og tilmeld dig på få minutter.
+          Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
+          tilmeld dig på få minutter.
         </p>
         <a className={styles.heroLink} href="#events">
           Se kommende events ↓
@@ -81,7 +90,10 @@ export default function HomePage() {
           </label>
           <label>
             Kategori
-            <select value={category} onChange={(event) => setCategory(event.target.value)}>
+            <select
+              value={category}
+              onChange={(event) => setCategory(event.target.value)}
+            >
               {categories.map((item) => (
                 <option key={item}>{item}</option>
               ))}
@@ -92,19 +104,27 @@ export default function HomePage() {
         <section className={styles.eventGrid} aria-busy={isLoading}>
           {isLoading && (
             <>
-              <p role="status" className="sr-only">Indlæser events…</p>
+              <p role="status" className="sr-only">
+                Indlæser events…
+              </p>
               {Array.from({ length: 6 }).map((_, index) => (
                 <SkeletonEventCard key={index} />
               ))}
             </>
           )}
-          {!isLoading && error && <p className={styles.message} role="alert">{error}</p>}
+          {!isLoading && error && (
+            <p className={styles.message} role="alert">
+              {error}
+            </p>
+          )}
           {!isLoading && !error && filteredEvents.length === 0 && (
             <p className={styles.message}>Ingen events matcher din søgning.</p>
           )}
-          {!isLoading && !error && filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
+          {!isLoading &&
+            !error &&
+            filteredEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
         </section>
       </main>
       <Footer />
