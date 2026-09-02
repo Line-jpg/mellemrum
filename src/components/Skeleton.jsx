@@ -1,16 +1,21 @@
+import styles from "./Skeleton.module.css";
+import eventCardStyles from "./EventCard.module.css";
+import eventPageStyles from "../pages/EventPage.module.css";
+import registrationsStyles from "../pages/RegistrationsPage.module.css";
+
 function SkeletonBlock({ className = "" }) {
-  return <div className={`skeleton-block ${className}`.trim()} />;
+  return <div className={`${styles.skeletonBlock} ${className}`.trim()} />;
 }
 
 export function SkeletonEventCard() {
   return (
-    <div className="event-card skeleton-card" aria-hidden="true">
-      <SkeletonBlock className="skeleton-image" />
-      <div className="event-card-content">
-        <SkeletonBlock className="skeleton-line skeleton-card-eyebrow" />
-        <SkeletonBlock className="skeleton-line skeleton-card-title" />
-        <SkeletonBlock className="skeleton-line skeleton-card-text" />
-        <SkeletonBlock className="skeleton-line skeleton-card-text-short" />
+    <div className={`${eventCardStyles.eventCard} skeleton-card`} aria-hidden="true">
+      <SkeletonBlock className={styles.skeletonImage} />
+      <div className={eventCardStyles.eventCardContent}>
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonCardEyebrow}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonCardTitle}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonCardText}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonCardTextShort}`} />
       </div>
     </div>
   );
@@ -18,14 +23,14 @@ export function SkeletonEventCard() {
 
 export function SkeletonEventDetail() {
   return (
-    <section className="event-detail skeleton-detail" aria-hidden="true">
-      <SkeletonBlock className="skeleton-image" />
-      <div className="event-detail-content">
-        <SkeletonBlock className="skeleton-line skeleton-detail-eyebrow" />
-        <SkeletonBlock className="skeleton-line skeleton-detail-title" />
-        <SkeletonBlock className="skeleton-line skeleton-detail-subtitle" />
-        <SkeletonBlock className="skeleton-line skeleton-detail-paragraph" />
-        <SkeletonBlock className="skeleton-line skeleton-detail-paragraph-long" />
+    <section className={`${eventPageStyles.eventDetail} ${styles.skeletonDetail}`} aria-hidden="true">
+      <SkeletonBlock className={styles.skeletonImage} />
+      <div className={eventPageStyles.eventDetailContent}>
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonDetailEyebrow}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonDetailTitle}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonDetailSubtitle}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonDetailParagraph}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonDetailParagraphLong}`} />
       </div>
     </section>
   );
@@ -33,14 +38,14 @@ export function SkeletonEventDetail() {
 
 export function SkeletonRegistrationRow() {
   return (
-    <div className="registration-row skeleton-row" aria-hidden="true">
+    <div className={`${registrationsStyles.registrationRow} skeleton-row`} aria-hidden="true">
       <div>
-        <SkeletonBlock className="skeleton-line skeleton-row-title" />
-        <SkeletonBlock className="skeleton-line skeleton-row-subtitle" />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonRowTitle}`} />
+        <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonRowSubtitle}`} />
       </div>
-      <SkeletonBlock className="skeleton-line skeleton-row-cell-1" />
-      <SkeletonBlock className="skeleton-line skeleton-row-cell-2" />
-      <SkeletonBlock className="skeleton-line skeleton-row-cell-3" />
+      <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonRowCell1}`} />
+      <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonRowCell2}`} />
+      <SkeletonBlock className={`${styles.skeletonLine} ${styles.skeletonRowCell3}`} />
     </div>
   );
 }

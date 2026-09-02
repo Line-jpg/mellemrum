@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { SkeletonRegistrationRow } from "../components/Skeleton";
+import styles from "./RegistrationsPage.module.css";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -37,14 +38,14 @@ export default function RegistrationsPage() {
 
   return (
     <>
-      <header className="admin-header">
-        <p className="eyebrow">Internt overblik</p>
+      <header className={styles.adminHeader}>
+        <p className={styles.eyebrow}>Internt overblik</p>
         <h1>Tilmeldinger</h1>
         <p>{isLoading ? "Indlæser…" : `${registrationCount} tilmeldinger i alt`}</p>
       </header>
       <main>
-        <div className="registration-list" aria-busy={isLoading}>
-          <div className="registration-row registration-labels">
+        <div className={styles.registrationList} aria-busy={isLoading}>
+          <div className={`${styles.registrationRow} ${styles.registrationLabels}`}>
             <span>Navn</span>
             <span>Event</span>
             <span>Dato</span>
@@ -58,19 +59,19 @@ export default function RegistrationsPage() {
               ))}
             </>
           )}
-          {!isLoading && error && <p className="message" role="alert">{error}</p>}
+          {!isLoading && error && <p className={styles.message} role="alert">{error}</p>}
           {!isLoading && !error && registrations.length === 0 && (
-            <p className="message">Ingen tilmeldinger endnu.</p>
+            <p className={styles.message}>Ingen tilmeldinger endnu.</p>
           )}
           {!isLoading && !error && registrations.map((registration) => (
-            <div className="registration-row" key={registration.id}>
+            <div className={styles.registrationRow} key={registration.id}>
               <div>
                 <strong>{registration.name}</strong>
                 <small>{registration.email}</small>
               </div>
               <span>{registration.eventTitle}</span>
               <span>{new Date(registration.eventDate).toLocaleDateString("da-DK")}</span>
-              <span className="status">{registration.status}</span>
+              <span className={styles.status}>{registration.status}</span>
             </div>
           ))}
         </div>
